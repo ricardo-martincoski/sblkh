@@ -1,0 +1,34 @@
+sblkh - sandbox for linux kernel hacking
+
+sandbox
+ - scripts
+ - doc
+ - automated tests
+ - reproducible environment
+
+tricks to debug kernel
+ - printk
+ - kgdb
+ - dynamic debug
+ - ftrace
+ - ...
+
+br2-external
+ - br2 qemu defconfig
+ - ccache
+ - download cache
+ - docker
+ - out-of-tree driver
+ - script to run qemu
+
+gitlab CI
+ - runtime tests
+ - static analysis
+
+interesting online resources
+ - https://github.com/tpiekarski/lkm-sandbox
+ - https://pnx9.github.io/thehive/Debugging-Linux-Kernel.html
+ - https://www.kernel.org/doc/html/v5.0/trace/ftrace.html
+ - https://www.redhat.com/en/blog/debugging-kernel-qemulibvirt
+ - https://www.sobyte.net/post/2022-02/debug-linux-kernel-with-qemu-and-gdb/
+ - https://yulistic.gitlab.io/2018/12/debugging-linux-kernel-with-gdb-and-qemu/
