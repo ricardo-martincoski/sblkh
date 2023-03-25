@@ -1,0 +1,5 @@
+image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230325.2317
+
+test:
+  script:
+    - make test

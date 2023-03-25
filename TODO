@@ -4,7 +4,6 @@ sandbox
  - scripts
  - doc
  - automated tests
- - reproducible environment
 
 tricks to debug kernel
  - printk
