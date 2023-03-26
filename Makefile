@@ -7,8 +7,7 @@ URL_DOCKER_IMAGE := ricardomartincoski_opensource/sblkh/sblkh
 
 BR_MAKE := \
 	cd $(OUTPUT_DIR) && \
-		$(SRC_BUILDROOT_DIR)/utils/brmake \
-		BR2_DL_DIR=$(CACHE_DOWNLOAD_DIR)
+		$(SRC_BUILDROOT_DIR)/utils/brmake
 
 date := $(shell date +%Y%m%d.%H%M --utc)
 

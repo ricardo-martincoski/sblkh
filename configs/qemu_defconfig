@@ -4,6 +4,7 @@
 # and then updated:
 # - to contain this license header
 # - to use a pre-built toolchain to speed up the build
+# - to enable download cache inside the project directory
 
 # Architecture
 BR2_arm=y
@@ -11,6 +12,9 @@ BR2_cortex_a15=y
 
 # Pre-built toolchain
 BR2_TOOLCHAIN_EXTERNAL=y
+
+# Download cache
+BR2_DL_DIR="$(BR2_EXTERNAL_SBLKH_PATH)/download"
 
 # Image
 BR2_ROOTFS_POST_IMAGE_SCRIPT="board/qemu/post-image.sh board/qemu/arm-ebbr/post-image.sh support/scripts/genimage.sh"
