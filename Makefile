@@ -25,6 +25,7 @@ test:
 		qemu_defconfig
 	$(Q)$(BR_MAKE) source
 	$(Q)$(BR_MAKE) linux
+	$(Q)$(BR_MAKE) all
 
 .PHONY: clean
 clean:
