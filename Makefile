@@ -2,6 +2,7 @@ BASE_DIR := $(shell readlink -f .)
 SRC_BR2_EXTERNAL_DIR := $(BASE_DIR)
 SRC_BUILDROOT_DIR := $(BASE_DIR)/buildroot
 OUTPUT_DIR := $(BASE_DIR)/output
+CACHE_COMPILER_DIR := $(BASE_DIR)/.ccache
 CACHE_DOWNLOAD_DIR := $(BASE_DIR)/download
 URL_DOCKER_IMAGE := ricardomartincoski_opensource/sblkh/sblkh
 
@@ -32,6 +33,7 @@ clean:
 .PHONY: distclean
 distclean: clean
 	$(Q)echo "=== $@ ==="
+	$(Q)rm -rf $(CACHE_COMPILER_DIR)
 	$(Q)rm -rf $(CACHE_DOWNLOAD_DIR)
 
 .PHONY: docker-image
