@@ -32,6 +32,11 @@ test:
 	$(Q)$(BR_MAKE) linux
 	$(Q)$(BR_MAKE) all
 
+.PHONY: run
+run: test
+	$(Q)echo "=== $@ ==="
+	$(Q)board/qemu/run.sh
+
 .PHONY: clean
 clean:
 	$(Q)echo "=== $@ ==="
