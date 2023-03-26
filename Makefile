@@ -3,6 +3,10 @@ SRC_BUILDROOT_DIR := $(BASE_DIR)/buildroot
 OUTPUT_DIR := $(BASE_DIR)/output
 URL_DOCKER_IMAGE := ricardomartincoski_opensource/sblkh/sblkh
 
+BR_MAKE := \
+	$(MAKE) \
+	-C $(OUTPUT_DIR)
+
 date := $(shell date +%Y%m%d.%H%M --utc)
 
 .PHONY: default
@@ -15,6 +19,7 @@ test:
 		O=$(OUTPUT_DIR) \
 		-C $(SRC_BUILDROOT_DIR) \
 		qemu_arm_ebbr_defconfig
+	$(Q)$(BR_MAKE) source
 
 .PHONY: clean
 clean:

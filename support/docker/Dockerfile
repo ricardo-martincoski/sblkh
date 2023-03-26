@@ -31,6 +31,16 @@ RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
         git \
         && echo done installing basic gitlab CI dependencies
 
+RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
+        bc \
+        ca-certificates \
+        cpio \
+        file \
+        rsync \
+        unzip \
+        wget \
+        && echo done installing make source dependencies
+
 RUN useradd -ms /bin/bash br-user && \
     chown -R br-user:br-user /home/br-user
 
