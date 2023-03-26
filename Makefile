@@ -33,11 +33,19 @@ phony_targets_outside_docker := \
 	docker-image \
 
 phony_targets_inside_docker := \
-	test \
+	configure \
+	source \
+	toolchain \
+	uboot \
+	arm-trusted-firmware \
+	grub2 \
+	linux-depends \
+	linux \
+	rootfs \
 	run \
 
 .PHONY: default $(phony_targets_inside_docker) $(phony_targets_outside_docker)
-default: test
+default: rootfs
 
 ifeq ($(check_inside_docker),n) ########################################
 
@@ -47,23 +55,47 @@ $(phony_targets_inside_docker):
 
 else # ($(check_inside_docker),n) ########################################
 
-test:
+configure:
 	$(print_target_name)
 	$(Q)$(MAKE) \
 		BR2_EXTERNAL=$(SRC_BR2_EXTERNAL_DIR) \
 		O=$(OUTPUT_DIR) \
 		-C $(SRC_BUILDROOT_DIR) \
 		qemu_defconfig
+
+source: configure
+	$(print_target_name)
 	$(Q)$(BR_MAKE) source
+
+toolchain: source
+	$(print_target_name)
 	$(Q)$(BR_MAKE) toolchain
+
+uboot: toolchain
+	$(print_target_name)
 	$(Q)$(BR_MAKE) uboot
+
+arm-trusted-firmware: uboot
+	$(print_target_name)
 	$(Q)$(BR_MAKE) arm-trusted-firmware
+
+grub2: arm-trusted-firmware
+	$(print_target_name)
 	$(Q)$(BR_MAKE) grub2
+
+linux-depends: grub2
+	$(print_target_name)
 	$(Q)$(BR_MAKE) linux-depends
+
+linux: linux-depends
+	$(print_target_name)
 	$(Q)$(BR_MAKE) linux
+
+rootfs: linux
+	$(print_target_name)
 	$(Q)$(BR_MAKE) all
 
-run: test
+run: rootfs
 	$(print_target_name)
 	$(Q)board/qemu/run.sh
 

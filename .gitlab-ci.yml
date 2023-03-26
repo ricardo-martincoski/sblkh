@@ -7,6 +7,15 @@ default:
   before_script:
     # avoid https://gitlab.com/gitlab-org/gitlab-runner/-/issues/29022
     - git config --global --add safe.directory ${CI_PROJECT_DIR}
+    # fix timestamps change (that triggers unneeded rebuild) when extracting artifacts created using exclude rules
+    - touch -t $(date +%Y%m%d%H%M.%S) -c output/build/*/.stamp_*
+    # improve troubleshooting for passing artifacts from one job to another
+    - for dir in
+        .
+        download
+        output/build
+        output/images
+        ; do if [ -d $dir ]; then echo $dir ; ls -la $dir ; fi; done
 
 cache:
   key: single-cache
@@ -15,9 +24,76 @@ cache:
     - download/
   policy: pull-push
 
-test:
+.intermediary_build:
+  artifacts:
+    when: always
+    expire_in: 4 hours
+    paths:
+      # do not use output/build/**/.stamp_* because the folder would be created with root ownership
+      - output/
+    exclude:
+      # avoid ERROR: Uploading artifacts as "archive" to coordinator... 413 Payload Too Large
+      - output/build/*/**/[^.]*
+
+configure:
+  extends: .intermediary_build
   script:
-    - make test
+    - make configure
+
+source:
+  extends: .intermediary_build
+  needs:
+    - job: configure
+  script:
+    - make source
+
+toolchain:
+  extends: .intermediary_build
+  needs:
+    - job: source
+  script:
+    - make toolchain
+
+uboot:
+  extends: .intermediary_build
+  needs:
+    - job: toolchain
+  script:
+    - make uboot
+
+arm-trusted-firmware:
+  extends: .intermediary_build
+  needs:
+    - job: uboot
+  script:
+    - make arm-trusted-firmware
+
+grub2:
+  extends: .intermediary_build
+  needs:
+    - job: arm-trusted-firmware
+  script:
+    - make grub2
+
+linux-depends:
+  extends: .intermediary_build
+  needs:
+    - job: grub2
+  script:
+    - make linux-depends
+
+linux:
+  extends: .intermediary_build
+  needs:
+    - job: linux-depends
+  script:
+    - make linux
+
+rootfs:
+  needs:
+    - job: linux
+  script:
+    - make rootfs
   artifacts:
     when: always
     paths:
