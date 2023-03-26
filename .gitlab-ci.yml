@@ -1,4 +1,4 @@
-image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230326.1720
+image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230326.1956
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
