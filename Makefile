@@ -24,6 +24,11 @@ test:
 		-C $(SRC_BUILDROOT_DIR) \
 		qemu_defconfig
 	$(Q)$(BR_MAKE) source
+	$(Q)$(BR_MAKE) toolchain
+	$(Q)$(BR_MAKE) uboot
+	$(Q)$(BR_MAKE) arm-trusted-firmware
+	$(Q)$(BR_MAKE) grub2
+	$(Q)$(BR_MAKE) linux-depends
 	$(Q)$(BR_MAKE) linux
 	$(Q)$(BR_MAKE) all
 
