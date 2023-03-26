@@ -3,17 +3,18 @@
 # (original file buildroot/configs/qemu_arm_ebbr_defconfig)
 # and then updated:
 # - to contain this license header
+# - to use a pre-built toolchain to speed up the build
 
 # Architecture
 BR2_arm=y
 BR2_cortex_a15=y
 
+# Pre-built toolchain
+BR2_TOOLCHAIN_EXTERNAL=y
+
 # Image
 BR2_ROOTFS_POST_IMAGE_SCRIPT="board/qemu/post-image.sh board/qemu/arm-ebbr/post-image.sh support/scripts/genimage.sh"
 BR2_ROOTFS_POST_SCRIPT_ARGS="$(BR2_DEFCONFIG) -c board/qemu/arm-ebbr/genimage.cfg"
-
-# Linux headers
-BR2_PACKAGE_HOST_LINUX_HEADERS_CUSTOM_6_0=y
 
 # Kernel
 BR2_LINUX_KERNEL=y
