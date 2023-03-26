@@ -1,3 +1,6 @@
+BASE_DIR := $(shell readlink -f .)
+SRC_BUILDROOT_DIR := $(BASE_DIR)/buildroot
+OUTPUT_DIR := $(BASE_DIR)/output
 URL_DOCKER_IMAGE := ricardomartincoski_opensource/sblkh/sblkh
 
 date := $(shell date +%Y%m%d.%H%M --utc)
@@ -8,6 +11,15 @@ default: test
 .PHONY: test
 test:
 	$(Q)echo "=== $@ ==="
+	$(Q)$(MAKE) \
+		O=$(OUTPUT_DIR) \
+		-C $(SRC_BUILDROOT_DIR) \
+		qemu_arm_ebbr_defconfig
+
+.PHONY: clean
+clean:
+	$(Q)echo "=== $@ ==="
+	$(Q)rm -rf $(OUTPUT_DIR)
 
 .PHONY: docker-image
 docker-image:
