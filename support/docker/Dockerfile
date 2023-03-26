@@ -54,6 +54,10 @@ RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
         lzip \
         && echo done installing pre-built build tools
 
+RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
+        qemu-system-arm \
+        && echo done installing pre-built runtime test tools
+
 RUN useradd -ms /bin/bash br-user && \
     chown -R br-user:br-user /home/br-user
 

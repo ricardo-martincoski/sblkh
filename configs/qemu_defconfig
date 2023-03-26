@@ -6,6 +6,7 @@
 # - to use a pre-built toolchain to speed up the build
 # - to enable download cache inside the project directory
 # - to enable ccache speed up the build
+# - to use a pre-built host qemu to speed up the build
 
 # Architecture
 BR2_arm=y
@@ -68,7 +69,3 @@ BR2_TARGET_UBOOT_NEEDS_OPENSSL=y
 BR2_PACKAGE_HOST_DOSFSTOOLS=y
 BR2_PACKAGE_HOST_GENIMAGE=y
 BR2_PACKAGE_HOST_MTOOLS=y
-
-# host-qemu for gitlab testing
-BR2_PACKAGE_HOST_QEMU=y
-BR2_PACKAGE_HOST_QEMU_SYSTEM_MODE=y
