@@ -13,7 +13,6 @@ tricks to debug kernel
  - ...
 
 br2-external
- - br2 qemu defconfig
  - ccache
  - docker
  - out-of-tree driver

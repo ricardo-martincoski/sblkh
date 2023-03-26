@@ -22,7 +22,7 @@ test:
 		BR2_EXTERNAL=$(SRC_BR2_EXTERNAL_DIR) \
 		O=$(OUTPUT_DIR) \
 		-C $(SRC_BUILDROOT_DIR) \
-		qemu_arm_ebbr_defconfig
+		qemu_defconfig
 	$(Q)$(BR_MAKE) source
 
 .PHONY: clean
