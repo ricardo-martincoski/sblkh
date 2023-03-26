@@ -45,6 +45,10 @@ RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
         libncurses5-dev \
         && echo done installing make menuconfig dependencies
 
+RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
+        expect \
+        && echo done installing brmake dependencies
+
 RUN useradd -ms /bin/bash br-user && \
     chown -R br-user:br-user /home/br-user
 

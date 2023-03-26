@@ -1,4 +1,4 @@
-image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230326.1702
+image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230326.1720
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -20,4 +20,4 @@ test:
   artifacts:
     when: always
     paths:
-      - output/
+      - output/br.log

@@ -6,9 +6,9 @@ CACHE_DOWNLOAD_DIR := $(BASE_DIR)/download
 URL_DOCKER_IMAGE := ricardomartincoski_opensource/sblkh/sblkh
 
 BR_MAKE := \
-	$(MAKE) \
-	BR2_DL_DIR=$(CACHE_DOWNLOAD_DIR) \
-	-C $(OUTPUT_DIR)
+	cd $(OUTPUT_DIR) && \
+		$(SRC_BUILDROOT_DIR)/utils/brmake \
+		BR2_DL_DIR=$(CACHE_DOWNLOAD_DIR)
 
 date := $(shell date +%Y%m%d.%H%M --utc)
 
