@@ -8,6 +8,12 @@ default:
     # avoid https://gitlab.com/gitlab-org/gitlab-runner/-/issues/29022
     - git config --global --add safe.directory ${CI_PROJECT_DIR}
 
+cache:
+  key: single-cache
+  paths:
+    - download/
+  policy: pull-push
+
 test:
   script:
     - make test

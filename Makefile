@@ -2,10 +2,12 @@ BASE_DIR := $(shell readlink -f .)
 SRC_BR2_EXTERNAL_DIR := $(BASE_DIR)
 SRC_BUILDROOT_DIR := $(BASE_DIR)/buildroot
 OUTPUT_DIR := $(BASE_DIR)/output
+CACHE_DOWNLOAD_DIR := $(BASE_DIR)/download
 URL_DOCKER_IMAGE := ricardomartincoski_opensource/sblkh/sblkh
 
 BR_MAKE := \
 	$(MAKE) \
+	BR2_DL_DIR=$(CACHE_DOWNLOAD_DIR) \
 	-C $(OUTPUT_DIR)
 
 date := $(shell date +%Y%m%d.%H%M --utc)
@@ -27,6 +29,11 @@ test:
 clean:
 	$(Q)echo "=== $@ ==="
 	$(Q)rm -rf $(OUTPUT_DIR)
+
+.PHONY: distclean
+distclean: clean
+	$(Q)echo "=== $@ ==="
+	$(Q)rm -rf $(CACHE_DOWNLOAD_DIR)
 
 .PHONY: docker-image
 docker-image:
