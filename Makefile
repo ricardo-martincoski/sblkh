@@ -1,4 +1,5 @@
 BASE_DIR := $(shell readlink -f .)
+SRC_BR2_EXTERNAL_DIR := $(BASE_DIR)
 SRC_BUILDROOT_DIR := $(BASE_DIR)/buildroot
 OUTPUT_DIR := $(BASE_DIR)/output
 URL_DOCKER_IMAGE := ricardomartincoski_opensource/sblkh/sblkh
@@ -16,6 +17,7 @@ default: test
 test:
 	$(Q)echo "=== $@ ==="
 	$(Q)$(MAKE) \
+		BR2_EXTERNAL=$(SRC_BR2_EXTERNAL_DIR) \
 		O=$(OUTPUT_DIR) \
 		-C $(SRC_BUILDROOT_DIR) \
 		qemu_arm_ebbr_defconfig
