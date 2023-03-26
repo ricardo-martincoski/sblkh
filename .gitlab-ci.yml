@@ -1,4 +1,12 @@
-image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230325.2317
+image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230325.2333
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+default:
+  before_script:
+    # avoid https://gitlab.com/gitlab-org/gitlab-runner/-/issues/29022
+    - git config --global --add safe.directory ${CI_PROJECT_DIR}
 
 test:
   script:

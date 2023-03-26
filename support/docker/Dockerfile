@@ -27,6 +27,10 @@ RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
         build-essential \
         && echo done installing basic build dependencies
 
+RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
+        git \
+        && echo done installing basic gitlab CI dependencies
+
 RUN useradd -ms /bin/bash br-user && \
     chown -R br-user:br-user /home/br-user
 
