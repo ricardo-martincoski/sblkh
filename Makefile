@@ -24,6 +24,7 @@ test:
 		-C $(SRC_BUILDROOT_DIR) \
 		qemu_defconfig
 	$(Q)$(BR_MAKE) source
+	$(Q)$(BR_MAKE) linux
 
 .PHONY: clean
 clean:
