@@ -10,6 +10,14 @@ BR_MAKE := \
 	cd $(OUTPUT_DIR) && \
 		$(SRC_BUILDROOT_DIR)/utils/brmake
 
+# make V=1 will enable verbose mode
+V ?= 0
+ifeq ($(V),0)
+Q := @
+else
+Q :=
+endif
+
 date := $(shell date +%Y%m%d.%H%M --utc)
 
 .PHONY: default
