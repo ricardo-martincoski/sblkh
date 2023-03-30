@@ -29,6 +29,7 @@ cache:
     when: always
     expire_in: 4 hours
     paths:
+      - .stamp_*
       # do not use output/build/**/.stamp_* because the folder would be created with root ownership
       - output/
     exclude:
@@ -97,5 +98,6 @@ rootfs:
   artifacts:
     when: always
     paths:
+      - .stamp_*
       - output/br.log
       - output/images/

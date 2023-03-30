@@ -26,6 +26,20 @@ endef
 define print_target_name_outsize_docker
 	@echo "====== $@ ======"
 endef
+define create_stamp_file
+	$(Q)touch $@
+endef
+
+real_targets_inside_docker := \
+	.stamp_configure \
+	.stamp_source \
+	.stamp_toolchain \
+	.stamp_uboot \
+	.stamp_arm_trusted_firmware \
+	.stamp_grub2 \
+	.stamp_linux_depends \
+	.stamp_linux \
+	.stamp_rootfs \
 
 phony_targets_outside_docker := \
 	clean \
@@ -49,59 +63,90 @@ default: rootfs
 
 ifeq ($(check_inside_docker),n) ########################################
 
-$(phony_targets_inside_docker):
+$(real_targets_inside_docker) $(phony_targets_inside_docker):
 	$(print_target_name_outsize_docker)
 	$(Q)utils/docker-run $(MAKE) V=$(V) $@
 
 else # ($(check_inside_docker),n) ########################################
 
-configure:
+configure: .stamp_configure
+	$(print_target_name)
+.stamp_configure:
 	$(print_target_name)
 	$(Q)$(MAKE) \
 		BR2_EXTERNAL=$(SRC_BR2_EXTERNAL_DIR) \
 		O=$(OUTPUT_DIR) \
 		-C $(SRC_BUILDROOT_DIR) \
 		qemu_defconfig
+	$(create_stamp_file)
 
-source: configure
+source: .stamp_source
+	$(print_target_name)
+.stamp_source: .stamp_configure
 	$(print_target_name)
 	$(Q)$(BR_MAKE) source
+	$(create_stamp_file)
 
-toolchain: source
+toolchain: .stamp_toolchain
+	$(print_target_name)
+.stamp_toolchain: .stamp_source
 	$(print_target_name)
 	$(Q)$(BR_MAKE) toolchain
+	$(create_stamp_file)
 
-uboot: toolchain
+uboot: .stamp_uboot
+	$(print_target_name)
+.stamp_uboot: .stamp_toolchain
 	$(print_target_name)
 	$(Q)$(BR_MAKE) uboot
+	$(create_stamp_file)
 
-arm-trusted-firmware: uboot
+arm-trusted-firmware: .stamp_arm_trusted_firmware
+	$(print_target_name)
+.stamp_arm_trusted_firmware: .stamp_uboot
 	$(print_target_name)
 	$(Q)$(BR_MAKE) arm-trusted-firmware
+	$(create_stamp_file)
 
-grub2: arm-trusted-firmware
+grub2: .stamp_grub2
+	$(print_target_name)
+.stamp_grub2: .stamp_arm_trusted_firmware
 	$(print_target_name)
 	$(Q)$(BR_MAKE) grub2
+	$(create_stamp_file)
 
-linux-depends: grub2
+linux-depends: .stamp_linux_depends
+	$(print_target_name)
+.stamp_linux_depends: .stamp_grub2
 	$(print_target_name)
 	$(Q)$(BR_MAKE) linux-depends
+	$(create_stamp_file)
 
-linux: linux-depends
+linux: .stamp_linux
+	$(print_target_name)
+.stamp_linux: .stamp_linux_depends
 	$(print_target_name)
 	$(Q)$(BR_MAKE) linux
+	$(create_stamp_file)
 
-rootfs: linux
+rootfs: .stamp_rootfs
+	$(print_target_name)
+.stamp_rootfs: .stamp_linux
 	$(print_target_name)
 	$(Q)$(BR_MAKE) all
+	$(create_stamp_file)
 
-run: rootfs
+run: .stamp_rootfs
 	$(print_target_name)
 	$(Q)board/qemu/run.sh
 
 endif # ($(check_inside_docker),n) ########################################
 
-clean:
+clean-stamps:
+	$(print_target_name)
+	$(Q)rm -rf .stamp_*
+
+clean: clean-stamps
 	$(print_target_name)
 	$(Q)rm -rf $(OUTPUT_DIR)
 
