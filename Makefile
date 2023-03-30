@@ -18,15 +18,35 @@ else
 Q :=
 endif
 
+check_inside_docker := $(shell if [ "`groups`" = 'br-user' ]; then echo y; else echo n; fi)
 date := $(shell date +%Y%m%d.%H%M --utc)
 define print_target_name
 	@echo "=== $@ ==="
 endef
+define print_target_name_outsize_docker
+	@echo "====== $@ ======"
+endef
 
-.PHONY: default
+phony_targets_outside_docker := \
+	clean \
+	distclean \
+	docker-image \
+
+phony_targets_inside_docker := \
+	test \
+	run \
+
+.PHONY: default $(phony_targets_inside_docker) $(phony_targets_outside_docker)
 default: test
 
-.PHONY: test
+ifeq ($(check_inside_docker),n) ########################################
+
+$(phony_targets_inside_docker):
+	$(print_target_name_outsize_docker)
+	$(Q)utils/docker-run $(MAKE) V=$(V) $@
+
+else # ($(check_inside_docker),n) ########################################
+
 test:
 	$(print_target_name)
 	$(Q)$(MAKE) \
@@ -43,23 +63,21 @@ test:
 	$(Q)$(BR_MAKE) linux
 	$(Q)$(BR_MAKE) all
 
-.PHONY: run
 run: test
 	$(print_target_name)
 	$(Q)board/qemu/run.sh
 
-.PHONY: clean
+endif # ($(check_inside_docker),n) ########################################
+
 clean:
 	$(print_target_name)
 	$(Q)rm -rf $(OUTPUT_DIR)
 
-.PHONY: distclean
 distclean: clean
 	$(print_target_name)
 	$(Q)rm -rf $(CACHE_COMPILER_DIR)
 	$(Q)rm -rf $(CACHE_DOWNLOAD_DIR)
 
-.PHONY: docker-image
 docker-image:
 	$(print_target_name)
 	$(Q)docker build -t registry.gitlab.com/$(URL_DOCKER_IMAGE):$(date) support/docker
