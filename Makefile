@@ -19,13 +19,16 @@ Q :=
 endif
 
 date := $(shell date +%Y%m%d.%H%M --utc)
+define print_target_name
+	@echo "=== $@ ==="
+endef
 
 .PHONY: default
 default: test
 
 .PHONY: test
 test:
-	$(Q)echo "=== $@ ==="
+	$(print_target_name)
 	$(Q)$(MAKE) \
 		BR2_EXTERNAL=$(SRC_BR2_EXTERNAL_DIR) \
 		O=$(OUTPUT_DIR) \
@@ -42,24 +45,24 @@ test:
 
 .PHONY: run
 run: test
-	$(Q)echo "=== $@ ==="
+	$(print_target_name)
 	$(Q)board/qemu/run.sh
 
 .PHONY: clean
 clean:
-	$(Q)echo "=== $@ ==="
+	$(print_target_name)
 	$(Q)rm -rf $(OUTPUT_DIR)
 
 .PHONY: distclean
 distclean: clean
-	$(Q)echo "=== $@ ==="
+	$(print_target_name)
 	$(Q)rm -rf $(CACHE_COMPILER_DIR)
 	$(Q)rm -rf $(CACHE_DOWNLOAD_DIR)
 
 .PHONY: docker-image
 docker-image:
-	$(Q)echo "=== $@ ==="
+	$(print_target_name)
 	$(Q)docker build -t registry.gitlab.com/$(URL_DOCKER_IMAGE):$(date) support/docker
 	$(Q)sed -e 's,^image:.*,image: $$CI_REGISTRY/$(URL_DOCKER_IMAGE):$(date),g' -i .gitlab-ci.yml
-	$(Q)echo And now do:
-	$(Q)echo docker push registry.gitlab.com/$(URL_DOCKER_IMAGE):$(date)
+	@echo And now do:
+	@echo docker push registry.gitlab.com/$(URL_DOCKER_IMAGE):$(date)
