@@ -16,7 +16,6 @@ br2-external
 
 gitlab CI
  - runtime tests
- - static analysis
 
 interesting online resources
  - https://github.com/tpiekarski/lkm-sandbox

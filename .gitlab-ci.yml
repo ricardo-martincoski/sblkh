@@ -1,4 +1,4 @@
-image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230326.2054
+image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230330.2242
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -25,7 +25,14 @@ cache:
   policy: pull-push
 
 stages:
+  - static-analysis
   - build
+
+static-analysis:
+  stage: static-analysis
+  cache: []
+  script:
+    - make static-analysis
 
 .intermediary_build:
   stage: build

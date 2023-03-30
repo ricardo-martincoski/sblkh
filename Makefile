@@ -57,6 +57,9 @@ phony_targets_inside_docker := \
 	linux \
 	rootfs \
 	run \
+	static-analysis \
+	check-package \
+	check-flake8 \
 
 .PHONY: default $(phony_targets_inside_docker) $(phony_targets_outside_docker)
 default: rootfs
@@ -139,6 +142,11 @@ rootfs: .stamp_rootfs
 run: .stamp_rootfs
 	$(print_target_name)
 	$(Q)board/qemu/run.sh
+
+include Makefile.buildroot
+static-analysis:
+	$(print_target_name)
+	$(Q)$(MAKE) V=$(V) check-package
 
 endif # ($(check_inside_docker),n) ########################################
 

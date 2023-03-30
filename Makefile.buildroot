@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# copied from Buildroot 2023.02-rc3
+# (original file Makefile)
+# and then updated:
+# - to contain only the needed targets
+# - to use SRC_BUILDROOT_DIR to find the scripts
+# - to pass -b to check-package validate this br2-external
+# - to not use a .checkpackageignore file
+# - to print target name
+
+check-flake8:
+	$(print_target_name)
+	$(Q)git ls-tree -r --name-only HEAD \
+	| xargs file \
+	| grep 'Python script' \
+	| cut -d':' -f1 \
+	| xargs -- python3 -m flake8 --statistics
+
+check-package:
+	$(print_target_name)
+	$(Q)$(SRC_BUILDROOT_DIR)/utils/check-package -b `git ls-tree -r --name-only HEAD`

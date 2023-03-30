@@ -58,6 +58,14 @@ RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
         qemu-system-arm \
         && echo done installing pre-built runtime test tools
 
+RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
+        python3 \
+        python3-flake8 \
+        python3-magic \
+        python3-six \
+        shellcheck \
+        && echo done installing check-package dependencies
+
 RUN useradd -ms /bin/bash br-user && \
     chown -R br-user:br-user /home/br-user
 
