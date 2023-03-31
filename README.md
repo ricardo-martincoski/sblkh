@@ -1,5 +1,11 @@
 # sblkh
 
+**sblkh** stands for *sandbox for Linux Kernel hacking*.
+
+Its main purpose is to provide a reproducible environment to test tools and
+techniques related to debugging or hacking the Linux Kernel, for my own
+educational purposes.
+
 ------
 
 ## License
@@ -34,3 +40,96 @@ and then updated:
 They are all, to the best of my knowledge (I am not a layer), licensed using
 compatible license.
 In the case you disagree please contact me and I will be happy to fix the issue.
+
+------
+
+## The target system
+
+The target system have this configuration:
+
+| Hardware   | Type and size           |
+|:-----------|:------------------------|
+| Processor  | ARM cortex-a15 2 cores  |
+| RAM        | 1GiB                    |
+| Disk       | VirtIO, 344 MB          |
+
+The software image is generated using Buildroot and the hardware is emulated by
+QEMU.
+
+| Disk         | Partition    | Size   | Contents                             |
+|:-------------|:-------------|-------:|:-------------------------------------|
+| flash.bin    | -            | 1MB    | Arm Trusted Firmware + U-Boot        |
+| disk.img     | GPT          | 344MB  | partitions below                     |
+| disk.img     | boot / fat16 | 134MB  | GRUB 2 + Linux Kernel                |
+| disk.img     | root / ext4  | 210MB  | root file system, including BusyBox  |
+
+| Software                    | Version      | Purpose                  |
+|:----------------------------|:------------:|:-------------------------|
+| Buildroot                   | 2023.02-rc3  | build system             |
+| Arm Trusted Firmware (ATF)  | v2.7         | initial boot stage       |
+| U-Boot                      | 2022.10      | bootloader               |
+| GRUB 2                      | 2.06         | boot manager             |
+| Linux Kernel                | 6.0.9        | operating system         |
+| BusyBox                     | v1.36.0      | user space applications  |
+| QEMU                        | 7.2.0        | system emulator          |
+
+------
+
+## How to run the tests
+
+Assumption: using a computer with `Ubuntu 22.04.2`.
+
+### Install `docker` and add your user to its group
+
+```
+$ sudo apt install docker.io
+$ sudo groupadd docker
+$ sudo usermod -aG docker $USER # NOTE: logout/login after this
+$ docker run hello-world
+```
+
+### Install `git` and `make`
+
+```
+$ sudo apt install git make
+```
+
+### Download the repo
+
+```
+$ git clone --depth 1 --recurse-submodules \
+  https://gitlab.com/RicardoMartincoski_opensource/sblkh.git
+$ cd sblkh
+```
+
+### Generate the image
+
+This command can take a couple of hours to run.
+
+```
+$ make
+```
+
+### Run runtime tests
+
+```
+$ make test
+```
+
+### Run the image
+
+```
+$ make run
+```
+User `root` password `root`.
+
+Ctrl+A,C opens the console in which one can use `quit` to abruptly stop QEMU.
+```
+(qemu) quit
+```
+
+### More use cases
+
+```
+$ make help
+```

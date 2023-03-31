@@ -1,8 +1,3 @@
-sblkh - sandbox for linux kernel hacking
-
-sandbox
- - doc
-
 tricks to debug kernel
  - printk
  - kgdb
@@ -12,6 +7,14 @@ tricks to debug kernel
 
 br2-external
  - out-of-tree driver
+
+isolate from buildroot version (to allow upgrade later)
+ - u-boot
+ - atf
+ - post scripts
+
+doc
+ - describe why the main target was split in smaller ones
 
 interesting online resources
  - https://github.com/tpiekarski/lkm-sandbox

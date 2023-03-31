@@ -45,6 +45,7 @@ phony_targets_outside_docker := \
 	clean \
 	distclean \
 	docker-image \
+	help \
 
 phony_targets_inside_docker := \
 	configure \
@@ -181,3 +182,22 @@ docker-image:
 	$(Q)sed -e 's,^image:.*,image: $$CI_REGISTRY/$(URL_DOCKER_IMAGE):$(date),g' -i .gitlab-ci.yml
 	@echo And now do:
 	@echo docker push registry.gitlab.com/$(URL_DOCKER_IMAGE):$(date)
+
+help:
+	@echo "**sblkh** stands for *sandbox for Linux Kernel hacking*."
+	@echo
+	@echo "Usage:"
+	@echo "  make - build the image"
+	@echo "  make V=1 <target> - calls the target enabling verbose output"
+	@echo "  make test - run runtime tests in the image"
+	@echo "  make run - run the image for manual testing (use ctrl+a,x to close qemu)"
+	@echo "  make clean - clean the build"
+	@echo "  make distclean - 'clean' + clean the caches (download and compile)"
+	@echo "  make docker-image - generate a new docker image to be uploaded"
+	@echo "  make static-analysis - run all static analysis tools"
+	@echo "  make linux-menuconfig - reconfigure the kernel and save the new defconfig"
+	@echo ""
+	@echo "Main dependency chain:"
+	@echo "  configure -> source -> toolchain -> uboot -> arm-trusted-firmware -> grub2 ->"
+	@echo "  -> linux-depends -> linux -> rootfs -> test"
+	@echo ""
