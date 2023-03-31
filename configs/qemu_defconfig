@@ -7,6 +7,7 @@
 # - to enable download cache inside the project directory
 # - to enable ccache speed up the build
 # - to use a pre-built host qemu to speed up the build
+# - to use a kernel defconfig from the br2-external
 
 # Architecture
 BR2_arm=y
@@ -30,8 +31,8 @@ BR2_ROOTFS_POST_SCRIPT_ARGS="$(BR2_DEFCONFIG) -c board/qemu/arm-ebbr/genimage.cf
 BR2_LINUX_KERNEL=y
 BR2_LINUX_KERNEL_CUSTOM_VERSION=y
 BR2_LINUX_KERNEL_CUSTOM_VERSION_VALUE="6.0.9"
-BR2_LINUX_KERNEL_USE_ARCH_DEFAULT_CONFIG=y
-BR2_LINUX_KERNEL_CONFIG_FRAGMENT_FILES="board/qemu/arm-ebbr/linux.fragment"
+BR2_LINUX_KERNEL_USE_CUSTOM_CONFIG=y
+BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE="$(BR2_EXTERNAL_SBLKH_PATH)/board/qemu/kernel.defconfig"
 BR2_LINUX_KERNEL_NEEDS_HOST_OPENSSL=y
 
 # Packages
