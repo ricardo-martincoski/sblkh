@@ -61,6 +61,7 @@ phony_targets_inside_docker := \
 	static-analysis \
 	check-package \
 	check-flake8 \
+	linux-menuconfig \
 
 .PHONY: default $(phony_targets_inside_docker) $(phony_targets_outside_docker)
 default: rootfs
@@ -153,6 +154,11 @@ static-analysis:
 	$(print_target_name)
 	$(Q)$(MAKE) V=$(V) check-package
 	$(Q)$(MAKE) V=$(V) check-flake8
+
+linux-menuconfig: .stamp_linux_depends
+	$(print_target_name)
+	$(Q)$(MAKE) -C $(OUTPUT_DIR) linux-menuconfig
+	$(Q)$(MAKE) -C $(OUTPUT_DIR) linux-update-defconfig
 
 endif # ($(check_inside_docker),n) ########################################
 
