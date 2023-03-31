@@ -57,6 +57,7 @@ phony_targets_inside_docker := \
 	linux \
 	rootfs \
 	run \
+	test \
 	static-analysis \
 	check-package \
 	check-flake8 \
@@ -143,10 +144,15 @@ run: .stamp_rootfs
 	$(print_target_name)
 	$(Q)board/qemu/run.sh
 
+test: .stamp_rootfs
+	$(print_target_name)
+	$(Q)tests/test.py
+
 include Makefile.buildroot
 static-analysis:
 	$(print_target_name)
 	$(Q)$(MAKE) V=$(V) check-package
+	$(Q)$(MAKE) V=$(V) check-flake8
 
 endif # ($(check_inside_docker),n) ########################################
 

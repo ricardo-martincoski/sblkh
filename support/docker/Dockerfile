@@ -66,6 +66,10 @@ RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
         shellcheck \
         && echo done installing check-package dependencies
 
+RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
+        python3-pexpect \
+        && echo done installing runtime test dependencies
+
 RUN useradd -ms /bin/bash br-user && \
     chown -R br-user:br-user /home/br-user
 

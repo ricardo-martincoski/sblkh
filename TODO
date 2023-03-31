@@ -2,7 +2,6 @@ sblkh - sandbox for linux kernel hacking
 
 sandbox
  - doc
- - automated tests
 
 tricks to debug kernel
  - printk
@@ -13,9 +12,6 @@ tricks to debug kernel
 
 br2-external
  - out-of-tree driver
-
-gitlab CI
- - runtime tests
 
 interesting online resources
  - https://github.com/tpiekarski/lkm-sandbox

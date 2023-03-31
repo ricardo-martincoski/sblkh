@@ -1,4 +1,4 @@
-image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230330.2242
+image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230331.0006
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -27,6 +27,7 @@ cache:
 stages:
   - static-analysis
   - build
+  - runtime-test
 
 static-analysis:
   stage: static-analysis
@@ -113,3 +114,15 @@ rootfs:
       - .stamp_*
       - output/br.log
       - output/images/
+
+test:
+  stage: runtime-test
+  cache: []
+  needs:
+    - job: rootfs
+  script:
+    - make test
+  artifacts:
+    when: always
+    paths:
+      - output/tests/
