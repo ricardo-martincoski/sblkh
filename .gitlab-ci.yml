@@ -46,7 +46,13 @@ static-analysis:
       - output/
     exclude:
       # avoid ERROR: Uploading artifacts as "archive" to coordinator... 413 Payload Too Large
-      - output/build/*/**/[^.]*
+      # but allow target-finalize to install modules by keeping:
+      # - build/linux-*/include/
+      # - build/linux-*/scripts/
+      # - build/linux-*/Makefile
+      - output/build/[^l]*/**/[^.]*
+      - output/build/l*/[^is]**/[^.M]*
+      - output/build/l*/s[^c]**/[^.]*
 
 configure:
   extends: .intermediary_build
