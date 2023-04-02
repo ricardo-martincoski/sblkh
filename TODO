@@ -6,8 +6,6 @@ tricks to debug kernel
  - ...
 
 isolate from buildroot version (to allow upgrade later)
- - u-boot
- - atf
  - post scripts
 
 doc

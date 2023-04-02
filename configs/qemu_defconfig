@@ -10,6 +10,7 @@
 # - to use a kernel defconfig from the br2-external
 # - to enable an out-of-tree driver
 # - to customize the shell prompt
+# - to use a u-boot defconfig from the br2-external
 
 # Architecture
 BR2_arm=y
@@ -64,8 +65,8 @@ BR2_TARGET_UBOOT=y
 BR2_TARGET_UBOOT_BUILD_SYSTEM_KCONFIG=y
 BR2_TARGET_UBOOT_CUSTOM_VERSION=y
 BR2_TARGET_UBOOT_CUSTOM_VERSION_VALUE="2022.10"
-BR2_TARGET_UBOOT_BOARD_DEFCONFIG="qemu_arm"
-BR2_TARGET_UBOOT_CONFIG_FRAGMENT_FILES="board/qemu/arm-ebbr/u-boot.fragment"
+BR2_TARGET_UBOOT_USE_CUSTOM_CONFIG=y
+BR2_TARGET_UBOOT_CUSTOM_CONFIG_FILE="$(BR2_EXTERNAL_SBLKH_PATH)/board/qemu/uboot.defconfig"
 BR2_TARGET_UBOOT_NEEDS_OPENSSL=y
 
 # Host tools
