@@ -1,0 +1,12 @@
+config BR2_PACKAGE_LKM_SANDBOX
+	bool "lkm-sandbox"
+	depends on BR2_LINUX_KERNEL
+	help
+	  The Linux Kernel Module Sandbox is a little module to learn,
+	  test and experiment with the development of Kernel Modules for
+	  the Linux System.
+
+	  https://github.com/tpiekarski/lkm-sandbox
+
+comment "lkm-sandbox needs a Linux kernel to be built"
+	depends on !BR2_LINUX_KERNEL

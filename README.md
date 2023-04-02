@@ -71,6 +71,7 @@ QEMU.
 | GRUB 2                      | 2.06         | boot manager             |
 | Linux Kernel                | 6.0.9        | operating system         |
 | BusyBox                     | v1.36.0      | user space applications  |
+| lkm-sandbox                 | 40141400388  | out-of-tree driver       |
 | QEMU                        | 7.2.0        | system emulator          |
 
 ------

@@ -5,9 +5,6 @@ tricks to debug kernel
  - ftrace
  - ...
 
-br2-external
- - out-of-tree driver
-
 isolate from buildroot version (to allow upgrade later)
  - u-boot
  - atf
@@ -17,7 +14,6 @@ doc
  - describe why the main target was split in smaller ones
 
 interesting online resources
- - https://github.com/tpiekarski/lkm-sandbox
  - https://pnx9.github.io/thehive/Debugging-Linux-Kernel.html
  - https://www.kernel.org/doc/html/v5.0/trace/ftrace.html
  - https://www.redhat.com/en/blog/debugging-kernel-qemulibvirt

@@ -8,6 +8,7 @@
 # - to enable ccache speed up the build
 # - to use a pre-built host qemu to speed up the build
 # - to use a kernel defconfig from the br2-external
+# - to enable an out-of-tree driver
 
 # Architecture
 BR2_arm=y
@@ -35,7 +36,7 @@ BR2_LINUX_KERNEL_USE_CUSTOM_CONFIG=y
 BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE="$(BR2_EXTERNAL_SBLKH_PATH)/board/qemu/kernel.defconfig"
 BR2_LINUX_KERNEL_NEEDS_HOST_OPENSSL=y
 
-# Packages
+# Upstream Packages
 BR2_PACKAGE_OPTEE_CLIENT=y
 
 # Filesystem
@@ -70,3 +71,6 @@ BR2_TARGET_UBOOT_NEEDS_OPENSSL=y
 BR2_PACKAGE_HOST_DOSFSTOOLS=y
 BR2_PACKAGE_HOST_GENIMAGE=y
 BR2_PACKAGE_HOST_MTOOLS=y
+
+# Packages from br2-external
+BR2_PACKAGE_LKM_SANDBOX=y
