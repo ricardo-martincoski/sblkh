@@ -68,6 +68,7 @@ RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
 
 RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
         python3-pexpect \
+        python3-pytest \
         && echo done installing runtime test dependencies
 
 RUN useradd -ms /bin/bash br-user && \

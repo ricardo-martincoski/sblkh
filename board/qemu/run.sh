@@ -6,10 +6,13 @@
 # and then updated:
 # - to contain this license header
 # - to change the original txt file into an executable script
+# - to execute in read-only mode, in order to avoid the need for a write lock
+#   between runtime tests
 
 set -e -x
 
 qemu-system-arm \
+      -snapshot \
       -M virt,secure=on \
       -bios output/images/flash.bin \
       -cpu cortex-a15 \

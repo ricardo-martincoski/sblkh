@@ -148,7 +148,7 @@ run: .stamp_rootfs
 
 test: .stamp_rootfs
 	$(print_target_name)
-	$(Q)tests/test.py
+	$(Q)python3 -m pytest tests/
 
 include Makefile.buildroot
 static-analysis:

@@ -1,3 +1,4 @@
+*.pyc
 /.ccache/
 /.stamp_*
 /download/
