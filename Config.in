@@ -1,3 +1,6 @@
 menu "Packages"
 source "$BR2_EXTERNAL_SBLKH_PATH/package/lkm-sandbox/Config.in"
 endmenu
+menu "Customizations"
+source "$BR2_EXTERNAL_SBLKH_PATH/package/prompt-result/Config.in"
+endmenu

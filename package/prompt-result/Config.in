@@ -1,0 +1,5 @@
+config BR2_PACKAGE_PROMPT_RESULT
+	bool "prompt-result"
+	help
+	  Display the result for the last command in the shell prompt
+	  (PS1).

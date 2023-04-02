@@ -9,6 +9,7 @@
 # - to use a pre-built host qemu to speed up the build
 # - to use a kernel defconfig from the br2-external
 # - to enable an out-of-tree driver
+# - to customize the shell prompt
 
 # Architecture
 BR2_arm=y
@@ -74,3 +75,6 @@ BR2_PACKAGE_HOST_MTOOLS=y
 
 # Packages from br2-external
 BR2_PACKAGE_LKM_SANDBOX=y
+
+# Customizations from br2-external
+BR2_PACKAGE_PROMPT_RESULT=y
