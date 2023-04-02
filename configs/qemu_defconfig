@@ -27,8 +27,8 @@ BR2_CCACHE=y
 BR2_CCACHE_DIR="$(BR2_EXTERNAL_SBLKH_PATH)/.ccache"
 
 # Image
-BR2_ROOTFS_POST_IMAGE_SCRIPT="board/qemu/post-image.sh board/qemu/arm-ebbr/post-image.sh support/scripts/genimage.sh"
-BR2_ROOTFS_POST_SCRIPT_ARGS="$(BR2_DEFCONFIG) -c board/qemu/arm-ebbr/genimage.cfg"
+BR2_ROOTFS_POST_IMAGE_SCRIPT="$(BR2_EXTERNAL_SBLKH_PATH)/board/qemu/post-image.sh support/scripts/genimage.sh"
+BR2_ROOTFS_POST_SCRIPT_ARGS="-c $(BR2_EXTERNAL_SBLKH_PATH)/board/qemu/genimage.cfg"
 
 # Kernel
 BR2_LINUX_KERNEL=y

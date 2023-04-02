@@ -5,9 +5,6 @@ tricks to debug kernel
  - ftrace
  - ...
 
-isolate from buildroot version (to allow upgrade later)
- - post scripts
-
 doc
  - describe why the main target was split in smaller ones
 
