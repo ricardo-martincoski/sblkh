@@ -71,6 +71,11 @@ RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
         python3-pytest \
         && echo done installing runtime test dependencies
 
+RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
+        graphviz \
+        python3-matplotlib \
+        && echo done installing post-build graphs dependencies
+
 RUN useradd -ms /bin/bash br-user && \
     chown -R br-user:br-user /home/br-user
 

@@ -1,4 +1,4 @@
-image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230402.1523
+image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230409.2113
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -142,6 +142,19 @@ legal-info:
     paths:
       - output/br.log
       - output/legal-info/
+
+graphs:
+  stage: post-build
+  cache: []
+  needs:
+    - job: images
+  script:
+    - make graphs
+  artifacts:
+    when: always
+    paths:
+      - output/br.log
+      - output/graphs/
 
 test:
   stage: runtime-test
