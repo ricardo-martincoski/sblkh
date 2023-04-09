@@ -108,12 +108,12 @@ linux:
   script:
     - make linux
 
-rootfs:
+images:
   stage: build
   needs:
     - job: linux
   script:
-    - make rootfs
+    - make images
   artifacts:
     when: always
     paths:
@@ -125,7 +125,7 @@ test:
   stage: runtime-test
   cache: []
   needs:
-    - job: rootfs
+    - job: images
   script:
     - make test
   artifacts:

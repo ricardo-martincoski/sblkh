@@ -39,7 +39,7 @@ real_targets_inside_docker := \
 	.stamp_grub2 \
 	.stamp_linux_depends \
 	.stamp_linux \
-	.stamp_rootfs \
+	.stamp_images \
 
 phony_targets_outside_docker := \
 	default \
@@ -58,7 +58,7 @@ phony_targets_inside_docker := \
 	grub2 \
 	linux-depends \
 	linux \
-	rootfs \
+	images \
 	run \
 	test \
 	static-analysis \
@@ -77,7 +77,7 @@ $(real_targets_inside_docker) $(phony_targets_inside_docker):
 
 else # ($(check_inside_docker),n) ########################################
 
-all: static-analysis rootfs test
+all: static-analysis images test
 	$(print_target_name)
 
 configure: .stamp_configure
@@ -140,18 +140,18 @@ linux: .stamp_linux
 	$(Q)$(BR_MAKE) linux
 	$(create_stamp_file)
 
-rootfs: .stamp_rootfs
+images: .stamp_images
 	$(print_target_name)
-.stamp_rootfs: .stamp_linux
+.stamp_images: .stamp_linux
 	$(print_target_name)
 	$(Q)$(BR_MAKE) all
 	$(create_stamp_file)
 
-run: .stamp_rootfs
+run: .stamp_images
 	$(print_target_name)
 	$(Q)board/qemu/run.sh
 
-test: .stamp_rootfs
+test: .stamp_images
 	$(print_target_name)
 	$(Q)python3 -m pytest tests/
 
@@ -198,7 +198,7 @@ help:
 	@echo "Usage:"
 	@echo "  make all - run static analysis tools, build the image and run runtime tests"
 	@echo "  make V=1 <target> - calls the target enabling verbose output"
-	@echo "  make rootfs - build the image"
+	@echo "  make images - build the image"
 	@echo "  make test - run runtime tests in the image"
 	@echo "  make run - run the image for manual testing (use ctrl+a,x to close qemu)"
 	@echo "  make clean - clean the build"
@@ -209,5 +209,5 @@ help:
 	@echo
 	@echo "Main dependency chain:"
 	@echo "  configure -> source -> toolchain -> uboot -> arm-trusted-firmware -> grub2 ->"
-	@echo "  -> linux-depends -> linux -> rootfs -> test -> all"
+	@echo "  -> linux-depends -> linux -> images -> test -> all"
 	@echo

@@ -108,7 +108,7 @@ $ cd sblkh
 In the very first call this command takes a couple of hours to run.
 
 ```
-$ make rootfs
+$ make images
 ```
 
 ### Run runtime tests
