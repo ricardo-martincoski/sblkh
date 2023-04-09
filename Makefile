@@ -42,12 +42,14 @@ real_targets_inside_docker := \
 	.stamp_rootfs \
 
 phony_targets_outside_docker := \
+	default \
 	clean \
 	distclean \
 	docker-image \
 	help \
 
 phony_targets_inside_docker := \
+	all \
 	configure \
 	source \
 	toolchain \
@@ -64,8 +66,8 @@ phony_targets_inside_docker := \
 	check-flake8 \
 	linux-menuconfig \
 
-.PHONY: default $(phony_targets_inside_docker) $(phony_targets_outside_docker)
-default: rootfs
+.PHONY: $(phony_targets_inside_docker) $(phony_targets_outside_docker)
+default: help
 
 ifeq ($(check_inside_docker),n) ########################################
 
@@ -74,6 +76,9 @@ $(real_targets_inside_docker) $(phony_targets_inside_docker):
 	$(Q)utils/docker-run $(MAKE) V=$(V) $@
 
 else # ($(check_inside_docker),n) ########################################
+
+all: static-analysis rootfs test
+	$(print_target_name)
 
 configure: .stamp_configure
 	$(print_target_name)
@@ -184,14 +189,16 @@ docker-image:
 	@echo docker push registry.gitlab.com/$(URL_DOCKER_IMAGE):$(date)
 
 help:
+	$(print_target_name)
 	@echo "sblkh version $$(git describe --always), Copyright (C) 2023  Ricardo Martincoski"
 	@echo "  sblkh comes with ABSOLUTELY NO WARRANTY; for details see file LICENSE."
 	@echo "  **sblkh** stands for *sandbox for Linux Kernel hacking*."
 	@echo "  SPDX-License-Identifier: GPL-2.0-only"
 	@echo
 	@echo "Usage:"
-	@echo "  make - build the image"
+	@echo "  make all - run static analysis tools, build the image and run runtime tests"
 	@echo "  make V=1 <target> - calls the target enabling verbose output"
+	@echo "  make rootfs - build the image"
 	@echo "  make test - run runtime tests in the image"
 	@echo "  make run - run the image for manual testing (use ctrl+a,x to close qemu)"
 	@echo "  make clean - clean the build"
@@ -202,5 +209,5 @@ help:
 	@echo
 	@echo "Main dependency chain:"
 	@echo "  configure -> source -> toolchain -> uboot -> arm-trusted-firmware -> grub2 ->"
-	@echo "  -> linux-depends -> linux -> rootfs -> test"
-	@echo ""
+	@echo "  -> linux-depends -> linux -> rootfs -> test -> all"
+	@echo

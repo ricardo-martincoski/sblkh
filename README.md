@@ -105,10 +105,10 @@ $ cd sblkh
 
 ### Generate the image
 
-This command can take a couple of hours to run.
+In the very first call this command takes a couple of hours to run.
 
 ```
-$ make
+$ make rootfs
 ```
 
 ### Run runtime tests
@@ -127,6 +127,12 @@ User `root` password `root`.
 Ctrl+A,C opens the console in which one can use `quit` to abruptly stop QEMU.
 ```
 (qemu) quit
+```
+
+### Run static analysis tools, generate the image, and run runtime tests
+
+```
+$ make all
 ```
 
 ### More use cases
