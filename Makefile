@@ -40,6 +40,7 @@ real_targets_inside_docker := \
 	.stamp_linux_depends \
 	.stamp_linux \
 	.stamp_images \
+	.stamp_needed_images \
 
 phony_targets_outside_docker := \
 	default \
@@ -59,6 +60,7 @@ phony_targets_inside_docker := \
 	linux-depends \
 	linux \
 	images \
+	needed-images \
 	run \
 	test \
 	static-analysis \
@@ -77,7 +79,11 @@ $(real_targets_inside_docker) $(phony_targets_inside_docker):
 
 else # ($(check_inside_docker),n) ########################################
 
-all: static-analysis images test
+all: \
+	static-analysis \
+	needed-images \
+	test \
+
 	$(print_target_name)
 
 configure: .stamp_configure
@@ -147,11 +153,20 @@ images: .stamp_images
 	$(Q)$(BR_MAKE) all
 	$(create_stamp_file)
 
-run: .stamp_images
+needed-images: .stamp_needed_images
+	$(print_target_name)
+.stamp_needed_images: .stamp_images
+	$(print_target_name)
+	$(Q)rm -rf $(OUTPUT_DIR)/needed-images/
+	$(Q)install -D -m 644 $(OUTPUT_DIR)/images/flash.bin $(OUTPUT_DIR)/needed-images/flash.bin
+	$(Q)install -D -m 644 $(OUTPUT_DIR)/images/disk.img $(OUTPUT_DIR)/needed-images/disk.img
+	$(create_stamp_file)
+
+run: .stamp_needed_images
 	$(print_target_name)
 	$(Q)board/qemu/run.sh
 
-test: .stamp_images
+test: .stamp_needed_images
 	$(print_target_name)
 	$(Q)python3 -m pytest tests/
 
@@ -209,5 +224,5 @@ help:
 	@echo
 	@echo "Main dependency chain:"
 	@echo "  configure -> source -> toolchain -> uboot -> arm-trusted-firmware -> grub2 ->"
-	@echo "  -> linux-depends -> linux -> images -> test -> all"
+	@echo "  -> linux-depends -> linux -> images -> needed-images -> test -> all"
 	@echo

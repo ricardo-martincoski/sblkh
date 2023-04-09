@@ -15,6 +15,7 @@ default:
         download
         output/build
         output/images
+        output/needed-images
         ; do if [ -d $dir ]; then echo $dir ; ls -la $dir ; fi; done
 
 cache:
@@ -27,6 +28,7 @@ cache:
 stages:
   - static-analysis
   - build
+  - post-build
   - runtime-test
 
 static-analysis:
@@ -109,26 +111,37 @@ linux:
     - make linux
 
 images:
-  stage: build
+  extends: .intermediary_build
   needs:
     - job: linux
   script:
     - make images
+
+needed-images:
+  stage: post-build
+  cache: []
+  needs:
+    - job: images
+  script:
+    - make needed-images
   artifacts:
     when: always
     paths:
       - .stamp_*
       - output/br.log
-      - output/images/
+      - output/needed-images/
 
 test:
   stage: runtime-test
   cache: []
   needs:
-    - job: images
+    - job: needed-images
   script:
     - make test
   artifacts:
     when: always
     paths:
+      - .stamp_*
+      - output/br.log
+      - output/needed-images/
       - output/tests/
