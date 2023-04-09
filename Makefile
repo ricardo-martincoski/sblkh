@@ -65,6 +65,7 @@ phony_targets_inside_docker := \
 	test \
 	legal-info \
 	graphs \
+	pkg-stats \
 	post-build \
 	static-analysis \
 	check-package \
@@ -184,10 +185,15 @@ graphs: .stamp_images
 	$(Q)$(BR_MAKE) graph-depends
 	$(Q)$(BR_MAKE) graph-size
 
+pkg-stats: .stamp_configure
+	$(print_target_name)
+	$(Q)$(BR_MAKE) pkg-stats
+
 post-build:
 	$(print_target_name)
 	$(Q)$(MAKE) V=$(V) legal-info
 	$(Q)$(MAKE) V=$(V) graphs
+	$(Q)$(MAKE) V=$(V) pkg-stats
 
 include Makefile.buildroot
 static-analysis:

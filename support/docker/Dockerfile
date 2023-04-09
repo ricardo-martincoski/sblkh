@@ -76,6 +76,12 @@ RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
         python3-matplotlib \
         && echo done installing post-build graphs dependencies
 
+RUN apt-get -o APT::Retries=3 install -y --no-install-recommends \
+        python3-aiohttp \
+        python3-ijson \
+        python3-requests \
+        && echo done installing pkg-stats dependencies
+
 RUN useradd -ms /bin/bash br-user && \
     chown -R br-user:br-user /home/br-user
 

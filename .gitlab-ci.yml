@@ -1,4 +1,4 @@
-image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230409.2113
+image: $CI_REGISTRY/ricardomartincoski_opensource/sblkh/sblkh:20230409.2219
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -7,6 +7,8 @@ default:
   before_script:
     # avoid https://gitlab.com/gitlab-org/gitlab-runner/-/issues/29022
     - git config --global --add safe.directory ${CI_PROJECT_DIR}
+    # avoid https://gitlab.com/gitlab-org/gitlab-runner/-/issues/29022 for pkg-stats
+    - git config --global --add safe.directory ${CI_PROJECT_DIR}/buildroot
     # fix timestamps change (that triggers unneeded rebuild) when extracting artifacts created using exclude rules
     - touch -t $(date +%Y%m%d%H%M.%S) -c output/build/*/.stamp_*
     # improve troubleshooting for passing artifacts from one job to another
@@ -155,6 +157,18 @@ graphs:
     paths:
       - output/br.log
       - output/graphs/
+
+pkg-stats:
+  stage: post-build
+  needs:
+    - job: configure
+  script:
+    - make pkg-stats
+  artifacts:
+    when: always
+    paths:
+      - output/br.log
+      - output/pkg-stats.*
 
 test:
   stage: runtime-test
