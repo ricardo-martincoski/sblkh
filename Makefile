@@ -63,6 +63,8 @@ phony_targets_inside_docker := \
 	needed-images \
 	run \
 	test \
+	legal-info \
+	post-build \
 	static-analysis \
 	check-package \
 	check-flake8 \
@@ -83,6 +85,7 @@ all: \
 	static-analysis \
 	needed-images \
 	test \
+	post-build \
 
 	$(print_target_name)
 
@@ -170,6 +173,14 @@ test: .stamp_needed_images
 	$(print_target_name)
 	$(Q)python3 -m pytest tests/
 
+legal-info: .stamp_source
+	$(print_target_name)
+	$(Q)$(BR_MAKE) legal-info
+
+post-build:
+	$(print_target_name)
+	$(Q)$(MAKE) V=$(V) legal-info
+
 include Makefile.buildroot
 static-analysis:
 	$(print_target_name)
@@ -219,6 +230,7 @@ help:
 	@echo "  make clean - clean the build"
 	@echo "  make distclean - 'clean' + clean the caches (download and compile)"
 	@echo "  make docker-image - generate a new docker image to be uploaded"
+	@echo "  make post-build - collect information about the build"
 	@echo "  make static-analysis - run all static analysis tools"
 	@echo "  make linux-menuconfig - reconfigure the kernel and save the new defconfig"
 	@echo

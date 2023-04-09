@@ -129,7 +129,7 @@ Ctrl+A,C opens the console in which one can use `quit` to abruptly stop QEMU.
 (qemu) quit
 ```
 
-### Run static analysis tools, generate the image, and run runtime tests
+### Run static analysis tools, generate the image, run runtime tests, and run post-build tools
 
 ```
 $ make all

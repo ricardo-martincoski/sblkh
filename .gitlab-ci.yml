@@ -131,6 +131,18 @@ needed-images:
       - output/br.log
       - output/needed-images/
 
+legal-info:
+  stage: post-build
+  needs:
+    - job: configure
+  script:
+    - make legal-info
+  artifacts:
+    when: always
+    paths:
+      - output/br.log
+      - output/legal-info/
+
 test:
   stage: runtime-test
   cache: []
