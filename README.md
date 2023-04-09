@@ -45,23 +45,23 @@ and then updated:
 
 ## The target system
 
-The target system have this configuration:
+The target system has this configuration:
 
 | Hardware   | Type and size           |
 |:-----------|:------------------------|
 | Processor  | ARM cortex-a15 2 cores  |
-| RAM        | 1GiB                    |
-| Disk       | VirtIO, 344 MB          |
+| RAM        | 1 GiB                   |
+| Disk       | VirtIO, 329 MiB         |
 
 The software image is generated using Buildroot and the hardware is emulated by
 QEMU.
 
-| Disk         | Partition    | Size   | Contents                             |
-|:-------------|:-------------|-------:|:-------------------------------------|
-| flash.bin    | -            | 1MB    | Arm Trusted Firmware + U-Boot        |
-| disk.img     | GPT          | 344MB  | partitions below                     |
-| disk.img     | boot / fat16 | 134MB  | GRUB 2 + Linux Kernel                |
-| disk.img     | root / ext4  | 210MB  | root file system, including BusyBox  |
+| Disk         | Partition    | Size     | Contents                             |
+|:-------------|:-------------|---------:|:-------------------------------------|
+| flash.bin    | -            | 1427 KiB | Arm Trusted Firmware + U-Boot        |
+| disk.img     | GPT          | 329 MiB  | partition table + partitions below   |
+| disk.img     | boot / fat16 | 128 MiB  | GRUB 2 + Linux Kernel                |
+| disk.img     | root / ext4  | 200 MiB  | root file system, including BusyBox  |
 
 | Software                    | Version      | Purpose                  |
 |:----------------------------|:------------:|:-------------------------|
