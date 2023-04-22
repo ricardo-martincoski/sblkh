@@ -184,7 +184,10 @@ docker-image:
 	@echo docker push registry.gitlab.com/$(URL_DOCKER_IMAGE):$(date)
 
 help:
-	@echo "**sblkh** stands for *sandbox for Linux Kernel hacking*."
+	@echo "sblkh version $$(git describe --always), Copyright (C) 2023  Ricardo Martincoski"
+	@echo "  sblkh comes with ABSOLUTELY NO WARRANTY; for details see file LICENSE."
+	@echo "  **sblkh** stands for *sandbox for Linux Kernel hacking*."
+	@echo "  SPDX-License-Identifier: GPL-2.0-only"
 	@echo
 	@echo "Usage:"
 	@echo "  make - build the image"
@@ -196,7 +199,7 @@ help:
 	@echo "  make docker-image - generate a new docker image to be uploaded"
 	@echo "  make static-analysis - run all static analysis tools"
 	@echo "  make linux-menuconfig - reconfigure the kernel and save the new defconfig"
-	@echo ""
+	@echo
 	@echo "Main dependency chain:"
 	@echo "  configure -> source -> toolchain -> uboot -> arm-trusted-firmware -> grub2 ->"
 	@echo "  -> linux-depends -> linux -> rootfs -> test"
