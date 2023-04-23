@@ -1,3 +1,5 @@
+[TOC]
+
 # sblkh
 
 **sblkh** stands for *sandbox for Linux Kernel hacking*.
