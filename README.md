@@ -34,12 +34,11 @@ There are some files in the tree copied from other projects.
 All of such files were originally licensed using a license that allows them to
 be redistributed following GPL-2.0.
 They have the license stated in the header of the file. For instance:
-```
-SPDX-License-Identifier: GPL-2.0-or-later
-copied from <Project name> <version>
-and then updated:
-- to do <something nice>
-```
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+    copied from <Project name> <version>
+    and then updated:
+    - to do <something nice>
 
 ------
 
@@ -82,61 +81,45 @@ Assumption: using a computer with `Ubuntu 22.04.2`.
 
 ### Install `docker` and add your user to its group
 
-```
-$ sudo apt install docker.io
-$ sudo groupadd docker
-$ sudo usermod -aG docker $USER # NOTE: logout/login after this
-$ docker run hello-world
-```
+    $ sudo apt install docker.io
+    $ sudo groupadd docker
+    $ sudo usermod -aG docker $USER # NOTE: logout/login after this
+    $ docker run hello-world
 
 ### Install `git` and `make`
 
-```
-$ sudo apt install git make
-```
+    $ sudo apt install git make
 
 ### Download the repo
 
-```
-$ git clone --depth 1 --recurse-submodules \
-  https://gitlab.com/RicardoMartincoski_opensource/sblkh.git
-$ cd sblkh
-```
+    $ git clone --depth 1 --recurse-submodules \
+      https://gitlab.com/RicardoMartincoski_opensource/sblkh.git
+    $ cd sblkh
 
 ### Generate the image
 
 In the very first call this command takes a couple of hours to run.
 
-```
-$ make images
-```
+    $ make images
 
 ### Run runtime tests
 
-```
-$ make test
-```
+    $ make test
 
 ### Run the image
 
-```
-$ make run
-```
+    $ make run
+
 User `root` password `root`.
 
 Ctrl+A,C opens the console in which one can use `quit` to abruptly stop QEMU.
-```
-(qemu) quit
-```
+
+    (qemu) quit
 
 ### Run static analysis tools, generate the image, run runtime tests, and run post-build tools
 
-```
-$ make all
-```
+    $ make all
 
 ### More use cases
 
-```
-$ make help
-```
+    $ make help
