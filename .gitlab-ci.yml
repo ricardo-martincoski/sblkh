@@ -37,12 +37,14 @@ stages:
 check-package:
   stage: static-analysis
   cache: []
+  needs: []
   script:
     - make check-package
 
 check-flake8:
   stage: static-analysis
   cache: []
+  needs: []
   script:
     - make check-flake8
 
