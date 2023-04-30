@@ -10,7 +10,7 @@ educational purposes.
 
 some [self](package/example-driver/README.md) here
 
-some [top](README.md) here
+some [top](../../README.md) here
 
 ------
 
