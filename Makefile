@@ -203,7 +203,7 @@ post-build:
 
 checkpatch.pl: .stamp_configure
 	$(print_target_name)
-	$(Q)$(BR_MAKE) example-driver-checkpatch.pl
+	$(Q)$(MAKE) -C $(OUTPUT_DIR) example-driver-checkpatch.pl
 
 include Makefile.buildroot
 static-analysis:
