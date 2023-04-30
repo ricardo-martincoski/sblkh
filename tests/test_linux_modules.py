@@ -24,4 +24,10 @@ def test_linux_module_insert_remove(request):
     vm.linux_command('modprobe -r lkm_device', ['Exiting Sandbox Device Module'])
     vm.linux_command('lsmod', fail_patterns=['lkm_device'])
 
+    vm.linux_command('lsmod', fail_patterns=['example_driver'])
+    vm.linux_command('modprobe example_driver')
+    vm.linux_command('lsmod', ['example_driver'])
+    vm.linux_command('modprobe -r example_driver')
+    vm.linux_command('lsmod', fail_patterns=['example_driver'])
+
     vm.stop()

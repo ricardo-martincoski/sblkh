@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# Example driver
+#
+# Copyright (C) 2023  Ricardo Martincoski  <ricardo.martincoski@gmail.com>
+#
+
+# https://www.kernel.org/doc/html/latest/kbuild/modules.html#creating-a-kbuild-file-for-an-external-module
+obj-m := example_driver.o

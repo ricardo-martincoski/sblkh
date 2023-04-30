@@ -67,6 +67,7 @@ phony_targets_inside_docker := \
 	graphs \
 	pkg-stats \
 	post-build \
+	checkpatch.pl \
 	static-analysis \
 	check-package \
 	check-flake8 \
@@ -195,11 +196,16 @@ post-build:
 	$(Q)$(MAKE) V=$(V) graphs
 	$(Q)$(MAKE) V=$(V) pkg-stats
 
+checkpatch.pl:
+	$(print_target_name)
+	$(Q)$(BR_MAKE) example-driver-checkpatch.pl
+
 include Makefile.buildroot
 static-analysis:
 	$(print_target_name)
 	$(Q)$(MAKE) V=$(V) check-package
 	$(Q)$(MAKE) V=$(V) check-flake8
+	$(Q)$(MAKE) V=$(V) checkpatch.pl
 
 linux-menuconfig: .stamp_linux_depends
 	$(print_target_name)

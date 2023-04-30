@@ -1,0 +1,8 @@
+config BR2_PACKAGE_EXAMPLE_DRIVER
+	bool "example-driver"
+	depends on BR2_LINUX_KERNEL
+	help
+	  Very simple example driver.
+
+comment "example-driver needs a Linux kernel to be built"
+	depends on !BR2_LINUX_KERNEL
