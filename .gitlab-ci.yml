@@ -195,13 +195,11 @@ pkg-stats:
       - output/br.log
       - output/pkg-stats.*
 
-test:
+.runtime_test:
   stage: runtime-test
   cache: []
   needs:
     - job: needed-images
-  script:
-    - make test
   artifacts:
     when: always
     paths:
@@ -209,3 +207,23 @@ test:
       - output/br.log
       - output/needed-images/
       - output/tests/
+
+test_grub_boot:
+  extends: .runtime_test
+  script:
+    - python3 -m pytest tests/test_grub_boot.py
+
+test_linux_boot:
+  extends: .runtime_test
+  script:
+    - python3 -m pytest tests/test_linux_boot.py
+
+test_linux_modules:
+  extends: .runtime_test
+  script:
+    - python3 -m pytest tests/test_linux_modules.py
+
+test_uboot_boot:
+  extends: .runtime_test
+  script:
+    - python3 -m pytest tests/test_uboot_boot.py
