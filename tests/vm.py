@@ -51,6 +51,43 @@ class VM():
         self.vm.expect('#{}#'.format(result))
         self.vm.expect(self.uboot_prompt())
 
+    def grub_prompt(self):
+        return 'grub> '
+
+    def grub_boot(self):
+        self.vm = pexpect.spawn(self.command, encoding='utf-8', logfile=self.log)
+        self.vm.expect('Booting Trusted Firmware')
+        self.vm.expect('U-Boot')
+        self.vm.expect('Hit any key to stop autoboot:')
+        self.vm.expect('efi/boot/bootarm.efi')
+        self.vm.expect('Welcome to GRUB')
+        self.vm.send('c')
+        self.vm.expect(self.grub_prompt())
+
+    def grub_command(self, command, ok_patterns=[], fail_patterns=[], timeout=-1):
+        all_fail_patterns = ['error: '] + fail_patterns
+        self.vm.sendline(command)
+        still_expecting = all_fail_patterns + ok_patterns
+        while len(still_expecting) > len(all_fail_patterns):
+            i = self.vm.expect(still_expecting, timeout=timeout)
+            if i < len(all_fail_patterns):
+                raise RuntimeError('Command "{}" echoed unexpected "{}"'
+                                   .format(command, still_expecting[i]))
+            elif i == len(all_fail_patterns):
+                still_expecting.pop(i)
+            else:
+                raise RuntimeError(
+                    'Command "{}" missed to echo "{}" before "{}"'
+                    .format(command, still_expecting[len(all_fail_patterns)], still_expecting[i]))
+        still_expecting = all_fail_patterns + [self.grub_prompt()]
+        while len(still_expecting) > len(all_fail_patterns):
+            i = self.vm.expect(still_expecting, timeout=timeout)
+            if i < len(all_fail_patterns):
+                raise RuntimeError('Command "{}" echoed unexpected "{}"'
+                                   .format(command, still_expecting[i]))
+            else:
+                still_expecting.pop(i)
+
     def linux_prompt(self, result=0):
         return '#{}# '.format(result)
 
