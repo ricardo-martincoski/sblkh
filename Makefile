@@ -66,6 +66,7 @@ phony_targets_inside_docker := \
 	legal-info \
 	graphs \
 	pkg-stats \
+	pre-build \
 	post-build \
 	checkpatch.pl \
 	static-analysis \
@@ -85,6 +86,7 @@ $(real_targets_inside_docker) $(phony_targets_inside_docker):
 else # ($(check_inside_docker),n) ########################################
 
 all: \
+	pre-build \
 	static-analysis \
 	needed-images \
 	test \
@@ -190,13 +192,16 @@ pkg-stats: .stamp_configure
 	$(print_target_name)
 	$(Q)$(BR_MAKE) pkg-stats
 
+pre-build: .stamp_source
+	$(print_target_name)
+
 post-build:
 	$(print_target_name)
 	$(Q)$(MAKE) V=$(V) legal-info
 	$(Q)$(MAKE) V=$(V) graphs
 	$(Q)$(MAKE) V=$(V) pkg-stats
 
-checkpatch.pl:
+checkpatch.pl: .stamp_configure
 	$(print_target_name)
 	$(Q)$(BR_MAKE) example-driver-checkpatch.pl
 
