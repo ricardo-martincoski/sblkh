@@ -8,6 +8,8 @@ Its main purpose is to provide a reproducible environment to test tools and
 techniques related to debugging or hacking the Linux Kernel, for my own
 educational purposes.
 
+some [package/example-driver/README.md](link) here
+
 ------
 
 ## License
