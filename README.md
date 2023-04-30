@@ -10,6 +10,8 @@ educational purposes.
 
 some [link](package/example-driver/README.md) here
 
+some [bar](package/example-driver/README.md#bar) here
+
 ------
 
 ## License
