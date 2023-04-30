@@ -34,7 +34,19 @@ stages:
   - post-build
   - runtime-test
 
-static-analysis:
+check-package:
+  stage: static-analysis
+  cache: []
+  script:
+    - make check-package
+
+check-flake8:
+  stage: static-analysis
+  cache: []
+  script:
+    - make check-flake8
+
+checkpatch.pl:
   stage: static-analysis
   cache:
     <<: *global_cache
@@ -42,7 +54,7 @@ static-analysis:
   needs:
     - job: source
   script:
-    - make static-analysis
+    - make checkpatch.pl
 
 .intermediary_build:
   artifacts:
