@@ -24,24 +24,25 @@ class VM():
         self.vm.expect(self.uboot_prompt())
 
     def uboot_command(self, command, ok_patterns=[], fail_patterns=[], result=0, timeout=-1):
+        all_fail_patterns = [] + fail_patterns
         self.vm.sendline(command)
         self.vm.expect(command)
-        still_expecting = fail_patterns + ok_patterns
-        while len(still_expecting) > len(fail_patterns):
+        still_expecting = all_fail_patterns + ok_patterns
+        while len(still_expecting) > len(all_fail_patterns):
             i = self.vm.expect(still_expecting, timeout=timeout)
-            if i < len(fail_patterns):
+            if i < len(all_fail_patterns):
                 raise RuntimeError('Command "{}" echoed unexpected "{}"'
                                    .format(command, still_expecting[i]))
-            elif i == len(fail_patterns):
+            elif i == len(all_fail_patterns):
                 still_expecting.pop(i)
             else:
                 raise RuntimeError(
                     'Command "{}" missed to echo "{}" before "{}"'
-                    .format(command, still_expecting[len(fail_patterns)], still_expecting[i]))
-        still_expecting = fail_patterns + [self.uboot_prompt()]
-        while len(still_expecting) > len(fail_patterns):
+                    .format(command, still_expecting[len(all_fail_patterns)], still_expecting[i]))
+        still_expecting = all_fail_patterns + [self.uboot_prompt()]
+        while len(still_expecting) > len(all_fail_patterns):
             i = self.vm.expect(still_expecting, timeout=timeout)
-            if i < len(fail_patterns):
+            if i < len(all_fail_patterns):
                 raise RuntimeError('Command "{}" echoed unexpected "{}"'
                                    .format(command, still_expecting[i]))
             else:
@@ -107,24 +108,25 @@ class VM():
         self.vm.expect(self.linux_prompt())
 
     def linux_command(self, command, ok_patterns=[], fail_patterns=[], result=0, timeout=-1):
+        all_fail_patterns = [] + fail_patterns
         self.vm.sendline(command)
         self.vm.expect(command)
-        still_expecting = fail_patterns + ok_patterns
-        while len(still_expecting) > len(fail_patterns):
+        still_expecting = all_fail_patterns + ok_patterns
+        while len(still_expecting) > len(all_fail_patterns):
             i = self.vm.expect(still_expecting, timeout=timeout)
-            if i < len(fail_patterns):
+            if i < len(all_fail_patterns):
                 raise RuntimeError('Command "{}" echoed unexpected "{}"'
                                    .format(command, still_expecting[i]))
-            elif i == len(fail_patterns):
+            elif i == len(all_fail_patterns):
                 still_expecting.pop(i)
             else:
                 raise RuntimeError(
                     'Command "{}" missed to echo "{}" before "{}"'
-                    .format(command, still_expecting[len(fail_patterns)], still_expecting[i]))
-        still_expecting = fail_patterns + [self.linux_prompt(result)]
-        while len(still_expecting) > len(fail_patterns):
+                    .format(command, still_expecting[len(all_fail_patterns)], still_expecting[i]))
+        still_expecting = all_fail_patterns + [self.linux_prompt(result)]
+        while len(still_expecting) > len(all_fail_patterns):
             i = self.vm.expect(still_expecting, timeout=timeout)
-            if i < len(fail_patterns):
+            if i < len(all_fail_patterns):
                 raise RuntimeError('Command "{}" echoed unexpected "{}"'
                                    .format(command, still_expecting[i]))
             else:
