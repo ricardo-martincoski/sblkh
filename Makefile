@@ -67,6 +67,7 @@ phony_targets_inside_docker := \
 	needed-images \
 	run \
 	test \
+	rebuild-test \
 	legal-info \
 	graphs \
 	pkg-stats \
@@ -190,6 +191,9 @@ test: .stamp_needed_images
 	$(print_target_name)
 	$(Q)python3 -m pytest tests/
 
+rebuild-test: clean-linux-and-drivers clean-target test
+	$(print_target_name)
+
 legal-info: .stamp_source
 	$(print_target_name)
 	$(Q)$(BR_MAKE) legal-info
@@ -277,6 +281,8 @@ help:
 	@echo "  make post-build - collect information about the build"
 	@echo "  make static-analysis - run all static analysis tools"
 	@echo "  make linux-menuconfig - reconfigure the kernel and save the new defconfig"
+	@echo "  make rebuild-all - rebuild kernel and drivers and run 'make all'"
+	@echo "  make rebuild-test - rebuild kernel and drivers and run 'make test'"
 	@echo
 	@echo "Main dependency chain:"
 	@echo "  configure -> source -> toolchain -> uboot -> arm-trusted-firmware -> grub2 ->"
