@@ -1,0 +1,26 @@
+From 3a6ebe417b445d609615fc79bd6b65d5b780a43f Mon Sep 17 00:00:00 2001
+From: Ricardo Martincoski <ricardo.martincoski@gmail.com>
+Date: Sun, 30 Apr 2023 23:33:50 -0300
+Subject: [PATCH] init/main.c: add example printk
+
+Signed-off-by: Ricardo Martincoski <ricardo.martincoski@gmail.com>
+---
+ init/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/init/main.c b/init/main.c
+index 1fe7942f5d4a8..c32e552cc0406 100644
+--- a/init/main.c
++++ b/init/main.c
+@@ -1416,6 +1416,8 @@ static void __init do_pre_smp_initcalls(void)
+ static int run_init_process(const char *init_filename)
+ {
+ 	const char *const *p;
++	// https://www.kernel.org/doc/html/latest/core-api/printk-basics.html
++	printk(KERN_CRIT "HACK: run init: %s\n", init_filename);
+ 
+ 	argv_init[0] = init_filename;
+ 	pr_info("Run %s as init process\n", init_filename);
+-- 
+2.34.1
+

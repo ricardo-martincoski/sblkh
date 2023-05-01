@@ -11,6 +11,7 @@
 # - to enable 2 out-of-tree drivers
 # - to customize the shell prompt
 # - to use a u-boot defconfig from the br2-external
+# - to add example patches to the linux kernel
 
 # Architecture
 BR2_arm=y
@@ -34,6 +35,7 @@ BR2_ROOTFS_POST_SCRIPT_ARGS="-c $(BR2_EXTERNAL_SBLKH_PATH)/board/qemu/genimage.c
 BR2_LINUX_KERNEL=y
 BR2_LINUX_KERNEL_CUSTOM_VERSION=y
 BR2_LINUX_KERNEL_CUSTOM_VERSION_VALUE="6.0.9"
+BR2_LINUX_KERNEL_PATCH="$(BR2_EXTERNAL_SBLKH_PATH)/patches/linux"
 BR2_LINUX_KERNEL_USE_CUSTOM_CONFIG=y
 BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE="$(BR2_EXTERNAL_SBLKH_PATH)/board/qemu/kernel.defconfig"
 BR2_LINUX_KERNEL_NEEDS_HOST_OPENSSL=y
