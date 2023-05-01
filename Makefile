@@ -45,6 +45,7 @@ real_targets_inside_docker := \
 phony_targets_outside_docker := \
 	default \
 	clean-stamps \
+	clean-target \
 	clean \
 	distclean \
 	docker-image \
@@ -52,6 +53,8 @@ phony_targets_outside_docker := \
 
 phony_targets_inside_docker := \
 	all \
+	clean-linux-and-drivers \
+	rebuild-all \
 	configure \
 	source \
 	toolchain \
@@ -93,6 +96,14 @@ all: \
 	test \
 	post-build \
 
+	$(print_target_name)
+
+clean-linux-and-drivers:
+	$(print_target_name)
+	$(Q)utils/dirclean-rdepends $(OUTPUT_DIR) linux
+	$(Q)rm -rf $(OUTPUT_DIR)/build/*/.stamp*_installed
+
+rebuild-all: clean-linux-and-drivers clean-target all
 	$(print_target_name)
 
 configure: .stamp_configure
@@ -223,6 +234,13 @@ endif # ($(check_inside_docker),n) ########################################
 clean-stamps:
 	$(print_target_name)
 	$(Q)rm -rf .stamp_*
+
+clean-target: clean-stamps
+	$(print_target_name)
+	$(Q)rm -rf $(OUTPUT_DIR)/build/*/.stamp*_installed
+	$(Q)rm -rf $(OUTPUT_DIR)/target/*
+	$(Q)rm -rf $(OUTPUT_DIR)/images/*
+	$(Q)rm -rf $(OUTPUT_DIR)/needed-images/*
 
 clean: clean-stamps
 	$(print_target_name)

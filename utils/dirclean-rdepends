@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -o errexit -o pipefail
+
+output_dir="${1}"
+main_package="${2}"
+
+if [ ! -d "${output_dir}" ]; then
+    echo "${output_dir} is not a directory"
+    exit 1
+fi
+
+if [ -z "${main_package}" ]; then
+    echo "unknown package"
+    exit 1
+fi
+
+rdepends="$(make -C "${output_dir}/" "${main_package}-show-recursive-rdepends" | grep -v ^make)"
+all_packages="${main_package} ${rdepends}"
+dirclean_targets="$(echo "${all_packages} " | sed 's/ /-dirclean /g')"
+
+eval make -C "${output_dir}/" "$dirclean_targets"
