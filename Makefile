@@ -44,6 +44,7 @@ real_targets_inside_docker := \
 
 phony_targets_outside_docker := \
 	default \
+	clean-stamps \
 	clean \
 	distclean \
 	docker-image \
