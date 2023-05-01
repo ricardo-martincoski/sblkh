@@ -99,7 +99,7 @@ all: \
 
 	$(print_target_name)
 
-clean-linux-and-drivers:
+clean-linux-and-drivers: .stamp_configure
 	$(print_target_name)
 	$(Q)utils/dirclean-rdepends $(OUTPUT_DIR) linux
 	$(Q)rm -rf $(OUTPUT_DIR)/build/*/.stamp*_installed
