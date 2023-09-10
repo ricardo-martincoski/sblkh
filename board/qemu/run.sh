@@ -1,5 +1,4 @@
 #!/bin/sh
-
 # SPDX-License-Identifier: GPL-2.0-or-later
 # copied from Buildroot 2023.02-rc3
 # (original file buildroot/board/qemu/arm-ebbr/readme.txt)

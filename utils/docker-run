@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-
 # SPDX-License-Identifier: GPL-2.0-or-later
 # copied from Buildroot 2023.02-rc3
+# (original file buildroot/utils/docker-run)
 # and then updated:
 # - to contain this license header
 

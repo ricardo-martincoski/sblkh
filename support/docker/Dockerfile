@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # copied from Buildroot 2023.02-rc3
+# (original file buildroot/support/docker/Dockerfile)
 # and then updated:
 # - to contain this license header
-# - to not point to Buildroot mailing list or registry
+# - to use a make target instead of raw commands to generate the image
 # - to use up-to-date base image (debian unstable = bookworm)
+# - to not point to Buildroot mailing list or registry
 # - to use 'sed' to select snapshot apt mirror
 # - to allow multiple layers on docker to improve regeneration of image
 # - to use the minimal number of packages installed

@@ -43,7 +43,9 @@ They have the license stated in the header of the file. For instance:
 
     SPDX-License-Identifier: GPL-2.0-or-later
     copied from <Project name> <version>
+    (original file project_repo/path/to/file)
     and then updated:
+    - to contain this license header
     - to do <something nice>
 
 ------

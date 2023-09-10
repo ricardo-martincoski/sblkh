@@ -5,13 +5,15 @@
 # - to contain this license header
 # - to use a pre-built toolchain to speed up the build
 # - to enable download cache inside the project directory
-# - to enable ccache speed up the build
-# - to use a pre-built host qemu to speed up the build
+# - to enable ccache to speed up the build
+# - to use post-image scripts from the br2-external
+# - to add example patches to the linux kernel
 # - to use a kernel defconfig from the br2-external
+# - to update comment to clarify which packages are upstream from Buildroot
+# - to use a u-boot defconfig from the br2-external
+# - to use a pre-built host qemu to speed up the build
 # - to enable 2 out-of-tree drivers
 # - to customize the shell prompt
-# - to use a u-boot defconfig from the br2-external
-# - to add example patches to the linux kernel
 
 # Architecture
 BR2_arm=y
